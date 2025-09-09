@@ -1,0 +1,569 @@
+/* Importa uma fonte limpa e moderna do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* Reseta margens e paddings padrões e define a fonte principal */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Estiliza o corpo da página */
+body {
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* ======================================= */
+/* ESTILOS DA PÁGINA DE LOGIN              */
+/* ======================================= */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column; 
+    gap: 15px; 
+}
+
+form h1 {
+    text-align: center;
+    margin-bottom: 5px;
+    color: #1a2c4e;
+}
+
+form p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-weight: 600;
+    color: #555;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    font-family: 'Poppins', sans-serif;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.error-message {
+    color: #e74c3c;
+    text-align: center;
+    font-weight: 600;
+    min-height: 20px;
+}
+
+/* ======================================= */
+/* ESTILOS DO DASHBOARD E PÁGINAS GERAIS   */
+/* ======================================= */
+
+.main-header {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 15px 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header h1 {
+    font-size: 1.5rem;
+    color: #1a2c4e;
+}
+
+.main-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.main-nav a:hover {
+    background-color: #f0f2f5;
+    color: #3498db;
+}
+
+#logout-button {
+    background-color: #e74c3c;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+#logout-button:hover {
+    background-color: #c0392b;
+}
+
+.dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px; 
+    padding: 40px;
+    width: 100%;
+    max-width: 1200px; 
+    margin: 0 auto; 
+    align-items: start;
+}
+
+.progress-group {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.card-dashboard {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.card-dashboard h2 {
+    color: #3498db;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.info-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+}
+
+.info-line span:first-child {
+    color: #555;
+}
+
+.info-line span:last-child {
+    font-weight: 600;
+    color: #1a2c4e;
+}
+
+.info-line.corte span:last-child {
+    color: #c0392b;
+}
+
+.info-line.faturado span:last-child {
+    color: #27ae60;
+}
+
+.progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%; 
+    height: 30px;
+    border-radius: 30px;
+    transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out;
+}
+
+.progress-bar.red {
+    background-color: #e74c3c;
+}
+.progress-bar.yellow {
+    background-color: #f1c40f;
+}
+.progress-bar.green {
+    background-color: #2ecc71;
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1a2c4e;
+}
+
+#progresso-faturado-barra {
+    background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.birthday-list li {
+    padding: 12px 5px;
+    border-bottom: 1px solid #f0f2f5;
+    font-size: 0.95rem;
+    /* Novas regras para alinhar o conteúdo */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.birthday-list li div {
+    display: flex;
+    flex-direction: column;
+}
+
+.birthday-list li small {
+    color: #777;
+    font-size: 0.8rem;
+}
+
+/* =============================================== */
+/* ESTILOS PARA PÁGINAS DE GESTÃO (CLIENTES, VENDAS) */
+/* =============================================== */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 20px;
+}
+
+.actions-bar h2 {
+    color: #1a2c4e;
+}
+
+.filter-container {
+    display: flex;
+    gap: 15px;
+    flex-grow: 1;
+    margin: 0 30px;
+}
+
+#search-input, #status-filter, #start-date-filter, #end-date-filter, #client-filter {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.clients-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.clients-table thead {
+    background-color: #f8f9fa;
+}
+
+.clients-table th, .clients-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.clients-table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.action-btn:hover {
+    opacity: 0.8;
+}
+
+.action-btn.edit { background-color: #3498db; }
+.action-btn.delete { background-color: #e74c3c; }
+.action-btn.faturar { background-color: #2ecc71; }
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #fff;
+    text-align: center;
+    display: inline-block;
+}
+
+.status-em-prospeccao { background-color: #f1c40f; color: #333; }
+.status-cliente-ativo { background-color: #2ecc71; }
+.status-inativo { background-color: #e74c3c; }
+
+.clients-table tbody tr.venda-positiva {
+    background-color: #e8f5e9;
+    color: #1e4620;
+}
+.clients-table tbody tr.venda-negativa {
+    background-color: #ffebee;
+    color: #5d0000;
+}
+.clients-table tbody tr.venda-positiva:hover {
+    background-color: #dcedc8;
+}
+.clients-table tbody tr.venda-negativa:hover {
+    background-color: #ffcdd2;
+}
+
+/* ======================================= */
+/* ESTILOS PARA O MODAL (POP-UP)           */
+/* ======================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 500px;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+.modal-header h2 {
+    margin: 0;
+    color: #1a2c4e;
+}
+.close-button {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #aaa;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+.modal-footer button {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+}
+.button-primary { background-color: #3498db; }
+.button-primary:hover { background-color: #2980b9; }
+.button-secondary {
+    background-color: #ecf0f1;
+    color: #333;
+    border: 1px solid #bdc3c7;
+}
+.button-secondary:hover { background-color: #bdc3c7; }
+
+/* Estilos para a área de mensagem nos formulários */
+.message-area {
+    text-align: center;
+    font-weight: 600;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.message-area.success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+.message-area.error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+.page-container {
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+    align-items: flex-start;
+}
+
+.page-container > main.container {
+    flex: 1; /* Ocupa o espaço que sobrar */
+    margin: 0;
+}
+
+.sidebar-container {
+    flex-basis: 400px; /* Largura fixa para a barra lateral */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.sidebar-container > .container {
+    margin: 0;
+}
+
+#top-clientes-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#top-clientes-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f2f5;
+}
+.autocomplete-container {
+    position: relative;
+}
+
+.autocomplete-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    z-index: 100;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.autocomplete-results div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.autocomplete-results div:hover {
+    background-color: #f0f2f5;
+}
+/* ======================================= */
+/* ESTILOS PARA A LISTA DE METAS DE CLIENTES */
+/* ======================================= */
+
+.client-goal-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.client-goal-list li {
+    font-size: 0.9rem;
+}
+
+.client-goal-list li strong {
+    color: #1a2c4e;
+}
+
+.client-goal-list .progress-container {
+    margin-top: 5px;
+    height: 15px; /* Barra de progresso menor */
+}
+.client-goal-list .progress-bar {
+    height: 15px; /* Barra de progresso menor */
+}
+/* Adicione esta nova regra no final da seção de ESTILOS GERAIS */
+.page-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+}
+
+/* Encontre a regra .container e ajuste a margem */
+.container {
+    width: 100%;
+    /* max-width: 1200px; */ /* Remova ou comente esta linha */
+    margin: 0; /* Mude de '40px auto' para '0' */
+    margin-bottom: 30px; /* Adiciona espaço abaixo de cada container */
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Encontre a regra .page-container e remova o padding */
+.page-container {
+    display: flex;
+    gap: 30px;
+    padding: 0; /* Mude de '40px' para '0' */
+    align-items: flex-start;
+}

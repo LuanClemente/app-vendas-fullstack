@@ -1,0 +1,12 @@
+# Build artifacts
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE files
+.project
+.classpath
+.settings/
+.vscode/
+
+# Log files
+*.log

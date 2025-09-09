@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Metas - App de Vendas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>Gestão de Metas</h1>
+        <nav class="main-nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="clientes.html">Clientes</a>
+            <a href="vendas.html">Vendas</a>
+            <a href="metas.html">Metas</a>
+        </nav>
+        <button id="logout-button">Sair</button>
+    </header>
+
+    <div class="page-content">
+
+        <div class="page-container">
+            
+            <main class="container">
+                <form id="meta-form">
+                    <h2>Definir Minha Meta Pessoal</h2>
+                    <div class="input-container"><label for="mes-meta">Mês</label><select id="mes-meta" required></select></div>
+                    <div class="input-container"><label for="ano-meta">Ano</label><input type="number" id="ano-meta" placeholder="Ex: 2025" required></div>
+                    <div class="input-container"><label for="valor-meta">Valor da Meta (R$)</label><input type="number" id="valor-meta" step="0.01" required></div>
+                    <button type="submit" class="button-primary">Salvar Minha Meta</button>
+                    <div id="message-area-meta" class="message-area"></div>
+                </form>
+
+                <hr style="margin: 30px 0; border: 1px solid #f0f2f5;">
+
+                <form id="meta-cliente-form">
+                    <h2>Definir Meta por Cliente</h2>
+                    <div class="input-container autocomplete-container">
+                        <label for="cliente-search-meta">Cliente:</label>
+                        <input type="text" id="cliente-search-meta" placeholder="Digite para buscar um cliente..." required>
+                        <input type="hidden" id="cliente-id-meta">
+                        <div id="cliente-results-meta" class="autocomplete-results"></div>
+                    </div>
+                    <div class="input-container">
+                        <label for="valor-meta-cliente">Valor da Meta para o Cliente (R$)</label>
+                        <input type="number" id="valor-meta-cliente" step="0.01" placeholder="Valor da meta" required>
+                    </div>
+                    <button type="submit" class="button-primary">Definir Meta do Cliente</button>
+                    <div id="message-area-meta-cliente" class="message-area"></div>
+                </form>
+            </main>
+            
+            <div class="sidebar-container">
+                <section class="container">
+                    <h2>Meu Histórico de Metas</h2>
+                    <table class="clients-table">
+                        <thead><tr><th>Mês/Ano</th><th>Valor da Meta</th></tr></thead>
+                        <tbody id="metas-table-body"></tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+
+        <section class="container">
+            <h2>Progresso das Metas por Cliente (Mês Selecionado)</h2>
+            <ul id="metas-clientes-list" class="client-goal-list">
+                </ul>
+        </section>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="metas.js"></script>
+</body>
+</html>
