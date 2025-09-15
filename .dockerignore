@@ -1,0 +1,17 @@
+# Ignorar build local do Maven
+target/
+**/target/
+
+# Ignorar arquivos de configuração locais
+*.log
+*.tmp
+*.swp
+
+# Ignorar arquivos de controle de IDE
+.idea/
+.vscode/
+*.iml
+
+# Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db

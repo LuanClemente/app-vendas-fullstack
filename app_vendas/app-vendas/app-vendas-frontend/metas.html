@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Gestão de Metas - App de Vendas</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="main-header">
+    <h1>Gestão de Metas</h1>
+    <nav class="main-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="clientes.html">Clientes</a>
+      <a href="vendas.html">Vendas</a>
+      <a href="metas.html" class="active">Metas</a>
+    </nav>
+    <button id="logout-button" class="action-btn edit">Sair</button>
+  </header>
+
+  <div class="page-content">
+    <div class="page-container">
+
+      <!-- Coluna principal: formulários -->
+      <main class="container main-container">
+        <!-- Card: Meta Pessoal -->
+        <section class="card-dashboard">
+          <form id="meta-form">
+            <h2>Definir Minha Meta Pessoal</h2>
+
+            <div class="form-row" style="gap:12px;">
+              <div class="input-container" style="flex: 0 0 40%;">
+                <label for="mes-meta">Mês</label>
+                <select id="mes-meta" required></select>
+              </div>
+
+              <div class="input-container" style="flex: 0 0 30%;">
+                <label for="ano-meta">Ano</label>
+                <input type="number" id="ano-meta" placeholder="Ex: 2025" required>
+              </div>
+
+              <div class="input-container" style="flex: 1;">
+                <label for="valor-meta">Valor da Meta (R$)</label>
+                <input type="number" id="valor-meta" step="0.01" required>
+              </div>
+            </div>
+
+            <div style="margin-top:14px; display:flex; gap:12px; align-items:center;">
+              <button type="submit" class="action-btn edit">Salvar Minha Meta</button>
+              <div id="message-area-meta" class="message-area" style="flex:1;"></div>
+            </div>
+          </form>
+        </section>
+
+        <!-- Card: separador visual (mantém o fluxo original) -->
+        <div style="height:18px"></div>
+
+        <!-- Card: Meta por Cliente -->
+        <section class="card-dashboard">
+          <form id="meta-cliente-form">
+            <h2>Definir Meta por Cliente</h2>
+
+            <div class="input-container autocomplete-container">
+              <label for="cliente-search-meta">Cliente:</label>
+              <input type="text" id="cliente-search-meta" placeholder="Digite para buscar um cliente..." required>
+              <input type="hidden" id="cliente-id-meta">
+              <div id="cliente-results-meta" class="autocomplete-results"></div>
+            </div>
+
+            <div class="input-container" style="margin-top:12px;">
+              <label for="valor-meta-cliente">Valor da Meta para o Cliente (R$)</label>
+              <input type="number" id="valor-meta-cliente" step="0.01" placeholder="Valor da meta" required>
+            </div>
+
+            <div style="margin-top:14px; display:flex; gap:12px; align-items:center;">
+              <button type="submit" class="action-btn edit">Definir Meta do Cliente</button>
+              <div id="message-area-meta-cliente" class="message-area" style="flex:1;"></div>
+            </div>
+          </form>
+        </section>
+      </main>
+
+      <!-- Sidebar: histórico de metas -->
+      <aside class="sidebar-container">
+        <section class="container card-dashboard">
+          <h2>Meu Histórico de Metas</h2>
+          <div style="overflow-x:auto;">
+            <table class="clients-table" style="min-width:320px;">
+              <thead>
+                <tr>
+                  <th>Mês/Ano</th>
+                  <th>Valor da Meta</th>
+                </tr>
+              </thead>
+              <tbody id="metas-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </aside>
+
+    </div> <!-- /page-container -->
+
+    <!-- Seção abaixo (manter funcionalidade do original) -->
+    <section class="container" style="margin-top:20px;">
+      <h2>Progresso das Metas por Cliente (Mês Selecionado)</h2>
+      <ul id="metas-clientes-list" class="client-goal-list"></ul>
+    </section>
+
+  </div> <!-- /page-content -->
+
+  <script src="dashboard.js"></script>
+  <script src="metas.js"></script>
+</body>
+</html>
