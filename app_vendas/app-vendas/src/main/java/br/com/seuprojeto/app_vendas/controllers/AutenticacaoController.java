@@ -42,6 +42,6 @@ public class AutenticacaoController {
         var tokenJWT = tokenService.gerarToken(usuario);
 
         // 5. Devolve o token para o cliente com status 200 OK.
-        return ResponseEntity.ok(new TokenJWTDTO(tokenJWT, usuario.getId(), usuario.getNome()));
+        return ResponseEntity.ok(new TokenJWTDTO(tokenJWT, usuario.getId(), usuario.getNome(),usuario.getPerfil()));
 }
 }

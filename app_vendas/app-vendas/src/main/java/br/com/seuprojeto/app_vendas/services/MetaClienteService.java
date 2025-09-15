@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.seuprojeto.app_vendas.dto.DadosMetaClienteDTO;
@@ -71,23 +70,9 @@ public class MetaClienteService {
     /**
      * Deleta uma meta de cliente.
      */
-    public void deletarMeta(Long id) {
-        if (!metaClienteRepository.existsById(id)) {
-            throw new RuntimeException("Meta do cliente não encontrada.");
-        }
-        metaClienteRepository.deleteById(id);
-    }
      /**
      * Atualiza o valor de uma meta de cliente existente.
      */
-    public MetaCliente atualizarMeta(Long id, BigDecimal novoValor) {
-        MetaCliente metaExistente = metaClienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Meta do cliente não encontrada."));
-        
-        metaExistente.setValor(novoValor);
-        return metaClienteRepository.save(metaExistente);
-    }
-
     /**
      * Deleta uma meta de cliente.
      */

@@ -12,11 +12,11 @@
         <h1>Gestão de Clientes</h1>
         <nav class="main-nav">
             <a href="dashboard.html">Dashboard</a>
-            <a href="clientes.html">Clientes</a>
+            <a href="clientes.html"class=active>Clientes</a>
             <a href="vendas.html">Vendas</a>
             <a href="metas.html">Metas</a>
         </nav>
-        <button id="logout-button">Sair</button>
+        <button id="logout-button" class="action-btn edit">Sair</button>
     </header>
 
     <main class="container">
@@ -31,7 +31,7 @@
                     <option value="Inativo">Inativo</option>
                 </select>
             </div>
-            <button id="add-client-button" class="button-primary">Adicionar Novo Cliente</button>
+            <button id="add-client-button" class="action-btn edit">Adicionar Novo Cliente</button>
         </div>
 
         <table class="clients-table">
@@ -88,7 +88,7 @@
                 </div>
                 <footer class="modal-footer">
                     <button type="button" id="cancel-button" class="button-secondary">Cancelar</button>
-                    <button type="submit" class="button-primary">Salvar Cliente</button>
+                    <button type="submit" class="action-btn edit">Salvar Cliente</button>
                 </footer>
             </form>
         </div>

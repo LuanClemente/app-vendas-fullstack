@@ -1,93 +1,115 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestão de Vendas - App de Vendas</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Vendas - App de Vendas</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="main-header">
-        <h1>Gestão de Vendas</h1>
-        <nav class="main-nav">
-            <a href="dashboard.html">Dashboard</a>
-            <a href="clientes.html">Clientes</a>
-            <a href="vendas.html">Vendas</a>
-            <a href="metas.html">Metas</a>
-        </nav>
-        <button id="logout-button">Sair</button>
-    </header>
+  <!-- Header -->
+  <header class="main-header">
+    <h1>Gestão de Vendas</h1>
+    <nav class="main-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="clientes.html">Clientes</a>
+      <a href="vendas.html" class="active">Vendas</a>
+      <a href="metas.html">Metas</a>
 
-    <div class="page-container">
-        
-        <main class="container">
-            <form id="venda-form">
-                <h2>Registrar Nova Venda</h2>
-                
-                <div class="input-container autocomplete-container">
-                    <label for="cliente-search">Cliente</label>
-                    <input type="text" id="cliente-search" placeholder="Digite para buscar um cliente..." required>
-                    <input type="hidden" id="cliente-id">
-                    <div id="cliente-results" class="autocomplete-results"></div>
-                </div>
+    </nav>
+    <button id="logout-button" class="action-btn edit">Sair</button>
+  </header>
 
-                <div class="input-container">
-                    <label for="valor-venda">Valor da Venda (R$)</label>
-                    <input type="number" id="valor-venda" step="0.01" placeholder="Valor (use negativo para cortes)" required>
-                </div>
-                
-                <div class="input-container">
-                    <label for="descricao-venda">Descrição</label>
-                    <textarea id="descricao-venda" rows="4" placeholder="Ex: Venda de 5 licenças do Software Y"></textarea>
-                </div>
+  <div class="page-content vendas-grid">
 
-                <button type="submit" class="button-primary">Registrar Venda</button>
+    <!-- Coluna Esquerda (Formulário + Top Clientes) -->
+    <div class="left-col">
+      <!-- Registrar Venda -->
+      <section class="progress-card">
+        <form id="venda-form">
+          <h2>Registrar Nova Venda</h2>
 
-                <div id="message-area" class="message-area"></div>
-            </form>
-        </main>
-        
-        <div class="sidebar-container">
-            <aside class="container top-clients-container">
-                <h2>🏆 Top Clientes do Mês</h2>
-                <ul id="top-clientes-list">
-                    </ul>
-            </aside>
+          <div class="input-container autocomplete-container">
+            <label for="cliente-search">Cliente</label>
+            <input 
+              type="text" 
+              id="cliente-search" 
+              placeholder="Digite para buscar um cliente..." 
+              required>
+            <input type="hidden" id="cliente-id">
+            <div id="cliente-results" class="autocomplete-results"></div>
+          </div>
 
-            <section class="container">
-                <div class="actions-bar">
-                    <h2>Vendas Registradas</h2>
-                    <div class="filter-container">
-                        <input type="text" id="search-vendas-input" placeholder="Buscar em todas as vendas...">
-                    </div>
-                </div>
-                <table class="clients-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Cliente</th>
-                            <th>Vendedor</th>
-                            <th>Valor</th>
-                            <th>Data</th>
-                            <th>Descrição</th>
-                            <th>Faturado?</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="vendas-table-body"></tbody>
-                </table>
-                
-                <div id="pagination-controls" class="pagination-controls">
-                    <button id="prev-page" class="button-secondary">Anterior</button>
-                    <span id="page-info"></span>
-                    <button id="next-page" class="button-secondary">Próximo</button>
-                </div>
-            </section>
-        </div>
+          <div class="input-container">
+            <label for="valor-venda">Valor da Venda (R$)</label>
+            <input 
+              type="number" 
+              id="valor-venda" 
+              step="0.01" 
+              placeholder="Valor (use negativo para cortes)" 
+              required>
+          </div>
+
+          <div class="input-container">
+            <label for="descricao-venda">Descrição</label>
+            <textarea 
+              id="descricao-venda" 
+              rows="4" 
+              placeholder="Ex: Venda de 5 licenças do Software Y"></textarea>
+          </div>
+
+          <button type="submit" class="action-btn edit">Registrar Venda</button>
+          <div id="message-area" class="message-area"></div>
+        </form>
+      </section>
+
+      <!-- Top Clientes -->
+      <aside class="progress-card">
+        <h2>🏆 Top Clientes do Mês</h2>
+        <ul id="top-clientes-list"></ul>
+      </aside>
     </div>
 
-    <script src="dashboard.js"></script>
-    <script src="vendas.js"></script>
+    <!-- Coluna Direita (Tabela) -->
+    <div class="right-col">
+      <section class="progress-card">
+        <div class="actions-bar">
+          <h2>Vendas Registradas</h2>
+          <div class="filter-container">
+            <input 
+              type="text" 
+              id="search-vendas-input" 
+              placeholder="Buscar em todas as vendas...">
+          </div>
+        </div>
+
+        <table class="clients-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Vendedor</th>
+              <th>Valor</th>
+              <th>Data</th>
+              <th>Descrição</th>
+              <th>Faturado?</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="vendas-table-body"></tbody>
+        </table>
+
+        <div id="pagination-controls" class="pagination-controls">
+          <button id="prev-page" class="button-secondary">Anterior</button>
+          <span id="page-info"></span>
+          <button id="next-page" class="button-secondary">Próximo</button>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+  <script src="vendas.js"></script>
 </body>
 </html>

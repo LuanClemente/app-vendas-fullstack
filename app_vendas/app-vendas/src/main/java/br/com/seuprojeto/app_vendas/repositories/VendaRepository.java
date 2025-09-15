@@ -16,24 +16,21 @@ import br.com.seuprojeto.app_vendas.entities.Venda;
 @Repository
 public interface VendaRepository extends JpaRepository<Venda, Long> {
 
-    // Método para buscar vendas de um usuário com paginação
+    // --- MÉTODOS PARA PAGINAÇÃO E LISTAS ---
     Page<Venda> findByUsuarioId(Long usuarioId, Pageable pageable);
-
-    // Método para buscar todas as vendas de um cliente (sem paginação)
     List<Venda> findByClienteId(Long idCliente);
-    
-    // Método para buscar todas as vendas de um usuário (sem paginação)
     List<Venda> findByUsuarioId(Long usuarioId);
 
-    // Consulta para o Dashboard do Cliente
+    // --- MÉTODOS PARA RELATÓRIOS ---
     @Query("SELECT v FROM Venda v WHERE v.cliente.id = :idCliente AND v.dataDaVenda BETWEEN :inicio AND :fim")
     List<Venda> findVendasByClienteAndPeriodo(@Param("idCliente") Long idCliente, @Param("inicio") LocalDate inicio, @Param("fim") LocalDate fim);
 
-    // Consulta para o Dashboard do Vendedor
     @Query("SELECT v FROM Venda v WHERE v.usuario.id = :usuarioId AND v.dataDaVenda BETWEEN :inicio AND :fim")
     List<Venda> findVendasByUsuarioAndPeriodo(@Param("usuarioId") Long usuarioId, @Param("inicio") LocalDate inicio, @Param("fim") LocalDate fim);
 
-    // Consulta para o Ranking de Top 10 Clientes
+    // NOVO MÉTODO para buscar TODAS as vendas em um período (para o Dashboard do Supervisor)
+    List<Venda> findAllByDataDaVendaBetween(LocalDate inicio, LocalDate fim);
+
     @Query("SELECT new br.com.seuprojeto.app_vendas.dto.TopClienteDTO(v.cliente.id, v.cliente.nomeEmpresa, SUM(v.valor)) " +
            "FROM Venda v " +
            "WHERE v.usuario.id = :usuarioId AND v.dataDaVenda BETWEEN :inicio AND :fim " +

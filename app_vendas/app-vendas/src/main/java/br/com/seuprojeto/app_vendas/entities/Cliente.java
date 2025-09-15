@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,18 +32,18 @@ public class Cliente {
 
     @Column(nullable = false)
     private String nomeContato;
-
     private String nomeEmpresa;
-
     @Column(unique = true)
     private String email;
-
     private String telefone;
-
     private String status;
-
     private LocalDate dataDeAniversario;
 
     @CreationTimestamp
     private LocalDateTime dataCadastro;
+
+    // === NOVA RELAÇÃO ADICIONADA AQUI ===
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 }

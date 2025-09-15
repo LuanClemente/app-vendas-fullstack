@@ -13,47 +13,54 @@ import br.com.seuprojeto.app_vendas.repositories.UsuarioRepository;
 @Service
 public class UsuarioService {
 
-    // 1. MUDANÇA AQUI: Trocamos a injeção de campos por um construtor.
-    // Declaramos os campos como 'final' para garantir que sejam inicializados.
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // 2. MUDANÇA AQUI: O construtor recebe as dependências.
-    // O Spring automaticamente entende que precisa "injetar" as peças aqui.
     @Autowired
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-
     public Usuario criarUsuario(Usuario usuario) {
         Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail());
-
         if (usuarioExistente.isPresent()) {
             throw new RuntimeException("Este e-mail já está em uso.");
         }
-
-        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
-        usuario.setSenha(senhaCriptografada);
-
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
 
     public List<Usuario> listarTodos() {
         return usuarioRepository.findAll();
     }
-
+    
     public Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com o ID: " + id));
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado com o ID: " + id));
     }
 
+    // =======================================================
+    //  MÉTODO ATUALIZADO COM A LÓGICA COMPLETA
+    // =======================================================
     public Usuario atualizarUsuario(Long id, Usuario dadosAtualizados) {
         Usuario usuarioExistente = this.buscarPorId(id);
 
+        // Validação de e-mail duplicado (a mesma que usamos para clientes)
+        Optional<Usuario> usuarioComEmail = usuarioRepository.findByEmail(dadosAtualizados.getEmail());
+        if (usuarioComEmail.isPresent() && !usuarioComEmail.get().getId().equals(id)) {
+            throw new RuntimeException("O e-mail informado já está em uso por outro usuário.");
+        }
+
+        // Agora sim, atualizamos os campos principais
         usuarioExistente.setNome(dadosAtualizados.getNome());
+        usuarioExistente.setEmail(dadosAtualizados.getEmail());
         usuarioExistente.setPerfil(dadosAtualizados.getPerfil());
+
+        // Lógica para a senha: só atualiza se uma nova senha for enviada (não estiver vazia)
+        if (dadosAtualizados.getSenha() != null && !dadosAtualizados.getSenha().isBlank()) {
+            usuarioExistente.setSenha(passwordEncoder.encode(dadosAtualizados.getSenha()));
+        }
 
         return usuarioRepository.save(usuarioExistente);
     }

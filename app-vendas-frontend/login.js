@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('jwt_token', data.token);
             localStorage.setItem('user_id', data.id);
             localStorage.setItem('user_name', data.nome);
+            localStorage.setItem('user_perfil', data.perfil);
 
             window.location.href = 'dashboard.html';
         } 

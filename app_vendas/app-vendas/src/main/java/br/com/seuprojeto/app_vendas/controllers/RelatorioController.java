@@ -3,6 +3,7 @@ package br.com.seuprojeto.app_vendas.controllers;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.seuprojeto.app_vendas.dto.DashboardClienteDTO;
+import br.com.seuprojeto.app_vendas.dto.DashboardSupervisorDTO;
 import br.com.seuprojeto.app_vendas.dto.DashboardVendedorDTO;
+import br.com.seuprojeto.app_vendas.dto.DesempenhoVendedorDTO;
 import br.com.seuprojeto.app_vendas.dto.ProgressoMetaClienteDTO;
 import br.com.seuprojeto.app_vendas.dto.TopClienteDTO;
 import br.com.seuprojeto.app_vendas.entities.Usuario;
@@ -24,6 +27,7 @@ public class RelatorioController {
     
     private final RelatorioService relatorioService;
 
+    @Autowired
     public RelatorioController(RelatorioService relatorioService) {
         this.relatorioService = relatorioService;
     }
@@ -51,8 +55,9 @@ public class RelatorioController {
         Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
         List<TopClienteDTO> topClientes = relatorioService.buscarTopClientesDoMes(usuarioLogado);
         return ResponseEntity.ok(topClientes);
-     }
-     @GetMapping("/progresso-metas-cliente")
+    }
+
+    @GetMapping("/progresso-metas-cliente")
     public ResponseEntity<List<ProgressoMetaClienteDTO>> getProgressoMetas(
             Authentication authentication,
             @RequestParam("mes") int mes,
@@ -61,5 +66,17 @@ public class RelatorioController {
         Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
         List<ProgressoMetaClienteDTO> progresso = relatorioService.getProgressoMetasClientes(usuarioLogado, mes, ano);
         return ResponseEntity.ok(progresso);
+    }
+
+    @GetMapping("/desempenho-equipe")
+    public ResponseEntity<List<DesempenhoVendedorDTO>> getDesempenhoEquipe() {
+        List<DesempenhoVendedorDTO> desempenho = relatorioService.getDesempenhoDaEquipe();
+        return ResponseEntity.ok(desempenho);
+    }
+
+    @GetMapping("/dashboard-supervisor")
+    public ResponseEntity<DashboardSupervisorDTO> getDashboardSupervisor() {
+        DashboardSupervisorDTO dashboard = relatorioService.getDashboardSupervisor();
+        return ResponseEntity.ok(dashboard);
     }
 }

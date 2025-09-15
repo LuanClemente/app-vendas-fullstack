@@ -50,7 +50,6 @@ public class VendaService {
         if (usuarioLogado.getPerfil() == PerfilUsuario.SUPERVISOR || usuarioLogado.getPerfil() == PerfilUsuario.ADMIN) {
             return vendaRepository.findAll(pageable);
         } else {
-            // CORREÇÃO AQUI: Chamando o método correto 'findByUsuarioId' com o ID do usuário
             return vendaRepository.findByUsuarioId(usuarioLogado.getId(), pageable);
         }
     }

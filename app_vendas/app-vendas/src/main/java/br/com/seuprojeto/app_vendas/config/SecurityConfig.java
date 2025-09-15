@@ -39,12 +39,17 @@ public class SecurityConfig {
                 // Rotas Públicas
                 .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 
-                // NOVA REGRA: Qualquer outra rota dentro de /api/** precisa de autenticação
-                .requestMatchers("/api/**").authenticated() 
+                // Rotas de Supervisor/Admin
+                .requestMatchers(HttpMethod.GET, "/api/usuarios").hasAnyRole("SUPERVISOR", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/usuarios/**").hasAnyRole("SUPERVISOR", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/usuarios/**").hasAnyRole("SUPERVISOR", "ADMIN")
+                .requestMatchers("/api/relatorios/desempenho-equipe").hasAnyRole("SUPERVISOR", "ADMIN")
+                .requestMatchers("/api/metas-gerais/**").hasAnyRole("SUPERVISOR", "ADMIN") // <-- REGRA ADICIONADA
                 
-                // Nega qualquer outra requisição que não foi mencionada acima
-                .anyRequest().denyAll() 
+                // Qualquer outra requisição precisa apenas de autenticação
+                .anyRequest().authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
             .build();

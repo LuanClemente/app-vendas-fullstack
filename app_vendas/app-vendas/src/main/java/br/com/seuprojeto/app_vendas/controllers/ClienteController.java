@@ -3,7 +3,9 @@ package br.com.seuprojeto.app_vendas.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.seuprojeto.app_vendas.dto.ClienteRespostaDTO;
 import br.com.seuprojeto.app_vendas.entities.Cliente;
+import br.com.seuprojeto.app_vendas.entities.Usuario;
 import br.com.seuprojeto.app_vendas.services.ClienteService;
 
 @RestController
@@ -24,15 +27,16 @@ public class ClienteController {
 
     private final ClienteService clienteService;
 
-    // @Autowired removida daqui para seguir as boas práticas
+    @Autowired
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
     }
 
     // CREATE
     @PostMapping
-    public ResponseEntity<ClienteRespostaDTO> criarCliente(@RequestBody Cliente cliente) {
-        Cliente novoCliente = clienteService.criarCliente(cliente);
+    public ResponseEntity<ClienteRespostaDTO> criarCliente(@RequestBody Cliente cliente, Authentication authentication) {
+        Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
+        Cliente novoCliente = clienteService.criarCliente(cliente, usuarioLogado);
         ClienteRespostaDTO respostaDTO = new ClienteRespostaDTO(
             novoCliente.getId(), 
             novoCliente.getNomeContato(), 
@@ -48,12 +52,18 @@ public class ClienteController {
 
     // READ (List All e Search)
     @GetMapping
-    public List<ClienteRespostaDTO> buscarClientes(@RequestParam(name = "busca", required = false) String termo) {
-        List<Cliente> clientes;
+    public List<ClienteRespostaDTO> buscarClientes(
+            @RequestParam(name = "busca", required = false) String termo,
+            Authentication authentication // <-- PARÂMETRO QUE FALTAVA
+    ) {
+        Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
+        List<Cliente> clientes = clienteService.listarTodos(usuarioLogado);
+
         if (termo != null && !termo.isBlank()) {
-            clientes = clienteService.pesquisarPorTermo(termo);
-        } else {
-            clientes = clienteService.listarTodos();
+            clientes = clientes.stream()
+                .filter(c -> c.getNomeContato().toLowerCase().contains(termo.toLowerCase()) ||
+                             (c.getNomeEmpresa() != null && c.getNomeEmpresa().toLowerCase().contains(termo.toLowerCase())))
+                .collect(Collectors.toList());
         }
 
         return clientes.stream()

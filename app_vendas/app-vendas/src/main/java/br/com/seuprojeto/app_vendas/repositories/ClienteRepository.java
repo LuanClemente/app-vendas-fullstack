@@ -17,6 +17,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     @Query("SELECT c FROM Cliente c WHERE MONTH(c.dataDeAniversario) = :mes AND DAY(c.dataDeAniversario) = :dia")
     List<Cliente> findAniversariantesDoDia(@Param("mes") int mes, @Param("dia") int dia);
+    List<Cliente> findByUsuarioId(Long usuarioId);
     
     @Query("SELECT c FROM Cliente c WHERE LOWER(c.nomeContato) LIKE LOWER(CONCAT('%', :termo, '%')) OR LOWER(c.nomeEmpresa) LIKE LOWER(CONCAT('%', :termo, '%'))")
     List<Cliente> pesquisarPorTermo(@Param("termo") String termo);
