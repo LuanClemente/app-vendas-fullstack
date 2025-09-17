@@ -5,12 +5,15 @@ FROM maven:3.9.6-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
-# Copia apenas o pom.xml primeiro (para aproveitar cache do Maven)
+# Copia o pom.xml primeiro para cache de dependências
 COPY app_vendas/app-vendas/pom.xml ./pom.xml
 RUN mvn dependency:go-offline -B
 
-# Agora copia o restante do código
+# Copia o código da aplicação
 COPY app_vendas/app-vendas ./ 
+
+# Dá permissão ao mvnw (caso esteja no repo)
+RUN chmod +x mvnw || true
 
 # Compila o projeto sem rodar os testes
 RUN mvn clean package -DskipTests
@@ -22,11 +25,10 @@ FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
-# Copia o jar gerado da etapa anterior
+# Copia o jar gerado do build
 COPY --from=build /app/target/app-vendas-0.0.1-SNAPSHOT.jar app.jar
 
-# Expõe a porta padrão do Spring Boot
+# Expõe a porta do Spring Boot
 EXPOSE 8080
 
-# Comando para rodar a aplicação
 ENTRYPOINT ["java", "-jar", "app.jar"]
