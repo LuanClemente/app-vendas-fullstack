@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isEditing = editingClientId !== null;
         const method = isEditing ? 'PUT' : 'POST';
         const url = isEditing 
-            ? `https://app-vendas-front-production.up.railway.app//${editingClientId}` 
-            : 'https://app-vendas-front-production.up.railway.app/';
+            ? `window.process.env.API_URL/${editingClientId}` 
+            : 'window.process.env.API_URL';
 
         try {
             const response = await fetch(url, {
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchClientes() {
         try {
-            const response = await fetch('https://app-vendas-front-production.up.railway.app/', {
+            const response = await fetch('window.process.env.API_URL', {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteCliente(id) {
         try {
-            const response = await fetch(`https://app-vendas-front-production.up.railway.app//${id}`, {
+            const response = await fetch(`window.process.env.API_URL/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     async function fetchClientByIdAndOpenModal(id) {
         try {
-            const response = await fetch(`https://app-vendas-front-production.up.railway.app//${id}`, {
+            const response = await fetch(`window.process.env.API_URL/${id}`, {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
