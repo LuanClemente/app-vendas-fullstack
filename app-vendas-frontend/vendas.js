@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         searchTimeout = setTimeout(async () => {
             try {
-                const response = await fetch(`http://localhost:8081/api/clientes?busca=${termo}`, {
+                const response = await fetch(`app-vendas-fullstack-production.up.railway.app?busca=${termo}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!response.ok) throw new Error('Falha na busca');
