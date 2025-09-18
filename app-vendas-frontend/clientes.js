@@ -72,8 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isEditing = editingClientId !== null;
         const method = isEditing ? 'PUT' : 'POST';
         const url = isEditing 
-            ? `http://localhost:8081/api/clientes/${editingClientId}` 
-            : 'http://localhost:8081/api/clientes';
+            ? `app-vendas-fullstack-production.up.railway.app/${editingClientId}` 
+            : 'app-vendas-fullstack-production.up.railway.app';
 
         try {
             const response = await fetch(url, {
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchClientes() {
         try {
-            const response = await fetch('http://localhost:8081/api/clientes', {
+            const response = await fetch('app-vendas-fullstack-production.up.railway.app', {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteCliente(id) {
         try {
-            const response = await fetch(`http://localhost:8081/api/clientes/${id}`, {
+            const response = await fetch(`app-vendas-fullstack-production.up.railway.app/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     async function fetchClientByIdAndOpenModal(id) {
         try {
-            const response = await fetch(`http://localhost:8081/api/clientes/${id}`, {
+            const response = await fetch(`app-vendas-fullstack-production.up.railway.app/${id}`, {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
