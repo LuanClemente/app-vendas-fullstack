@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Usar variável do ambiente para URL da API
+    let apiUrl = window.process.env.API_URL;
+    if (!apiUrl.endsWith('/')) apiUrl += '/';
     
     const token = localStorage.getItem('jwt_token');
     const userId = localStorage.getItem('user_id');
@@ -85,12 +88,11 @@ if (navMenu && userPerfil) {
             };
     
             try {
-                const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/metas', {
+                const response = await fetch(apiUrl + 'api/metas', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify(dadosMeta)
                 });
-    
                 if (response.ok) {
                     metaModal.style.display = 'none';
                     fetchDashboardData();
@@ -105,7 +107,7 @@ if (navMenu && userPerfil) {
 
     async function fetchDashboardData() {
         try {
-            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/relatorios/dashboard/vendedor', {
+            const response = await fetch(apiUrl + 'api/relatorios/dashboard/vendedor', {
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -157,7 +159,7 @@ if (navMenu && userPerfil) {
 
     async function fetchAniversariantes() {
         try {
-            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/clientes/aniversariantes', {
+            const response = await fetch(apiUrl + 'api/clientes/aniversariantes', {
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
