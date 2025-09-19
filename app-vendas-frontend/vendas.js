@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-
+    let apiUrl = window.process.env.API_URL;
+    if (!apiUrl.endsWith('/')) apiUrl += '/';
     const token = localStorage.getItem('jwt_token');
     const userId = localStorage.getItem('user_id');
 
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         searchTimeout = setTimeout(async () => {
             try {
-                const response = await fetch(`window.process.env.API_URL?busca=${termo}`, {
+                const response = await fetch(`${apiUrl}api/clientes?busca=${encodeURIComponent(termo)}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (!response.ok) throw new Error('Falha na busca');
@@ -84,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         try {
-            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/vendas', {
+            const response = await fetch(`${apiUrl}api/vendas`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(dadosVenda)
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- LÓGICA DA TABELA DE VENDAS (COM PAGINAÇÃO) ---
     async function fetchVendas(page = 0) {
         try {
-            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/vendas?pagina=${page}`, {
+            const response = await fetch(`${apiUrl}api/vendas?pagina=${page}`, {
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -171,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteVenda(id) {
         try {
-            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/vendas/${id}`, {
+            const response = await fetch(`${apiUrl}api/vendas/${id}`, {
                 method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) { 
@@ -183,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function faturarVenda(id) {
         try {
-            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/vendas/${id}/faturar`, {
+            const response = await fetch(`${apiUrl}api/vendas/${id}/faturar`, {
                 method: 'POST', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) { 
@@ -195,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchTopClientes() {
         try {
-            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/relatorios/top-clientes`, {
+            const response = await fetch(`${apiUrl}api/relatorios/top-clientes`, {
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
