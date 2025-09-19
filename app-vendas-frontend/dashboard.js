@@ -113,22 +113,41 @@ if (navMenu && userPerfil) {
             if (response.ok) {
                 const data = await response.json();
                 updateUI(data);
-            } else if (response.status === 403 || response.status === 401) {
-                alert('Sua sessão expirou. Faça login novamente.');
-                if(logoutButton) logoutButton.click();
+            } else {
+                let errorMsg = `Erro ao buscar dashboard: status ${response.status}`;
+                try {
+                    const errorBody = await response.text();
+                    errorMsg += `\nCorpo da resposta: ${errorBody}`;
+                } catch (e) {}
+                console.error(errorMsg);
+                if (response.status === 403 || response.status === 401) {
+                    alert('Sua sessão expirou. Faça login novamente.');
+                    if(logoutButton) logoutButton.click();
+                } else {
+                    alert('Erro ao buscar dados do dashboard. Veja o console para detalhes.');
+                }
             }
         } catch (error) { console.error('Erro de rede:', error); }
     }
 
     function updateUI(data) {
         const formatadorMoeda = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-        document.getElementById('meta-valor').textContent = formatadorMoeda.format(data.valorMeta);
-        document.getElementById('vendido-valor').textContent = formatadorMoeda.format(data.totalVendido);
-        document.getElementById('cortes-valor').textContent = formatadorMoeda.format(data.totalCortes);
-        document.getElementById('faturado-valor').textContent = formatadorMoeda.format(data.totalFaturado);
-        document.getElementById('faltante-valor').textContent = formatadorMoeda.format(data.valorFaltante);
+        // Tratamento para campos nulos/undefined
+        function safeMoeda(valor) {
+            if (valor === null || valor === undefined || isNaN(valor)) return 'R$ 0,00';
+            try { return formatadorMoeda.format(valor); } catch { return 'R$ 0,00'; }
+        }
+        function safePorcentagem(valor) {
+            if (valor === null || valor === undefined || isNaN(valor)) return '0.00';
+            return Number(valor).toFixed(2);
+        }
+        document.getElementById('meta-valor').textContent = safeMoeda(data.valorMeta);
+        document.getElementById('vendido-valor').textContent = safeMoeda(data.totalVendido);
+        document.getElementById('cortes-valor').textContent = safeMoeda(data.totalCortes);
+        document.getElementById('faturado-valor').textContent = safeMoeda(data.totalFaturado);
+        document.getElementById('faltante-valor').textContent = safeMoeda(data.valorFaltante);
         const porcentagemVendas = data.porcentagemAtingida;
-        document.getElementById('porcentagem-valor').textContent = porcentagemVendas.toFixed(2);
+        document.getElementById('porcentagem-valor').textContent = safePorcentagem(porcentagemVendas);
         const progressBarVendas = document.getElementById('progresso-barra');
         progressBarVendas.classList.remove('red', 'yellow', 'green');
         if (porcentagemVendas < 25) {
@@ -138,11 +157,11 @@ if (navMenu && userPerfil) {
         } else {
             progressBarVendas.classList.add('green');
         }
-        progressBarVendas.style.width = `${Math.min(porcentagemVendas, 100)}%`;
+        progressBarVendas.style.width = `${Math.min(porcentagemVendas || 0, 100)}%`;
         const porcentagemFaturado = data.porcentagemFaturada;
-        document.getElementById('porcentagem-faturado-valor').textContent = porcentagemFaturado.toFixed(2);
+        document.getElementById('porcentagem-faturado-valor').textContent = safePorcentagem(porcentagemFaturado);
         const progressBarFaturado = document.getElementById('progresso-faturado-barra');
-        progressBarFaturado.style.width = `${Math.min(porcentagemFaturado, 100)}%`;
+        progressBarFaturado.style.width = `${Math.min(porcentagemFaturado || 0, 100)}%`;
     }
     
     function calcularIdade(dataNascimento) {
