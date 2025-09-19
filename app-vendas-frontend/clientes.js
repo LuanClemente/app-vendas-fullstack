@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const tableBody = document.getElementById('clients-table-body');
+    const filtroInput = document.querySelector('input[type="text"]'); // campo de filtro
+    const statusSelect = document.querySelector('select'); // select de status
     const modal = document.getElementById('client-modal');
     const modalTitle = document.querySelector('.modal-header h2');
     const addButton = document.getElementById('add-client-button');
@@ -105,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (response.ok) {
                 const clientes = await response.json();
+                window._todosClientes = clientes; // salva todos os clientes
                 renderTable(clientes);
             }
         } catch (error) { console.error('Erro de rede:', error); }
@@ -112,7 +115,24 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function renderTable(clientes) {
         tableBody.innerHTML = '';
-        if (clientes.length === 0) {
+        // Aplica filtro se houver texto ou status
+        let filtro = filtroInput ? filtroInput.value.trim().toLowerCase() : '';
+        let statusFiltro = statusSelect ? statusSelect.value : '';
+        let clientesFiltrados = clientes;
+        if (filtro || (statusFiltro && statusFiltro !== 'Todos os Status')) {
+            clientesFiltrados = clientes.filter(cliente => {
+                let textoMatch = (
+                    String(cliente.id).includes(filtro) ||
+                    (cliente.nomeContato && cliente.nomeContato.toLowerCase().includes(filtro)) ||
+                    (cliente.nomeEmpresa && cliente.nomeEmpresa.toLowerCase().includes(filtro)) ||
+                    (cliente.email && cliente.email.toLowerCase().includes(filtro)) ||
+                    (cliente.telefone && cliente.telefone.toLowerCase().includes(filtro))
+                );
+                let statusMatch = (statusFiltro === 'Todos os Status' || cliente.status === statusFiltro);
+                return textoMatch && statusMatch;
+            });
+        }
+        if (clientesFiltrados.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="7">Nenhum cliente cadastrado.</td></tr>';
             return;
         }
@@ -124,12 +144,23 @@ document.addEventListener('DOMContentLoaded', () => {
             return '';
         };
 
-        clientes.forEach(cliente => {
+        clientesFiltrados.forEach(cliente => {
             const row = document.createElement('tr');
             row.innerHTML = `<td>${cliente.id}</td><td>${cliente.nomeContato}</td><td>${cliente.nomeEmpresa || ''}</td><td>${cliente.email}</td><td>${cliente.telefone || ''}</td><td><span class="status-badge ${getStatusClass(cliente.status)}">${cliente.status}</span></td><td class="actions-cell"><button class="action-btn edit" data-id="${cliente.id}">Editar</button><button class="action-btn delete" data-id="${cliente.id}">Excluir</button></td>`;
             tableBody.appendChild(row);
         });
         addEventListenersToButtons();
+    // Listener para filtro
+    if (filtroInput) {
+        filtroInput.addEventListener('input', () => {
+            renderTable(window._todosClientes || []);
+        });
+    }
+    if (statusSelect) {
+        statusSelect.addEventListener('change', () => {
+            renderTable(window._todosClientes || []);
+        });
+    }
     }
 
     function addEventListenersToButtons() {

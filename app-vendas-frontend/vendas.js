@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const descricaoInput = document.getElementById('descricao-venda');
     const messageArea = document.getElementById('message-area');
     const vendasTableBody = document.getElementById('vendas-table-body');
+    const vendasFiltroInput = document.querySelector('input[type="text"]'); // campo de filtro acima da tabela
     const topClientesList = document.getElementById('top-clientes-list');
     const clienteSearchInput = document.getElementById('cliente-search');
     const clienteIdInput = document.getElementById('cliente-id');
@@ -113,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (response.ok) {
                 const pageData = await response.json();
+                window._todasVendas = pageData.content; // salva todas as vendas da página
                 renderVendasTable(pageData.content);
                 updatePaginationControls(pageData);
             }
@@ -121,12 +123,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderVendasTable(vendas) {
         vendasTableBody.innerHTML = '';
-        if (vendas.length === 0 && currentPage === 0) {
+        // Aplica filtro se houver texto
+        let filtro = vendasFiltroInput ? vendasFiltroInput.value.trim().toLowerCase() : '';
+        let vendasFiltradas = vendas;
+        if (filtro) {
+            vendasFiltradas = vendas.filter(venda => {
+                return (
+                    String(venda.id).includes(filtro) ||
+                    (venda.nomeCliente && venda.nomeCliente.toLowerCase().includes(filtro)) ||
+                    (venda.nomeVendedor && venda.nomeVendedor.toLowerCase().includes(filtro)) ||
+                    (venda.descricao && venda.descricao.toLowerCase().includes(filtro))
+                );
+            });
+        }
+        if (vendasFiltradas.length === 0 && currentPage === 0) {
             vendasTableBody.innerHTML = '<tr><td colspan="8">Nenhuma venda registrada.</td></tr>';
             return;
         }
         const formatadorMoeda = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-        vendas.forEach(venda => {
+        vendasFiltradas.forEach(venda => {
             const row = document.createElement('tr');
             if (venda.valor >= 0) { row.classList.add('venda-positiva'); } 
             else { row.classList.add('venda-negativa'); }
@@ -137,6 +152,13 @@ document.addEventListener('DOMContentLoaded', () => {
             vendasTableBody.appendChild(row);
         });
         addEventListenersToButtons();
+    // Listener para filtro
+    if (vendasFiltroInput) {
+        vendasFiltroInput.addEventListener('input', () => {
+            // Usa vendas da página atual
+            renderVendasTable(window._todasVendas || []);
+        });
+    }
     }
 
     function updatePaginationControls(pageData) {
