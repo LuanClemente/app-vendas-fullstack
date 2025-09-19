@@ -1,5 +1,5 @@
 window.process = {
     env: {
-        API_URL: 'http://localhost:8081' // Valor padrão para rodar localmente
+        API_URL: 'https://app-vendas-front-production.up.railway.app/' // Valor padrão para rodar localmente
     }
 };
