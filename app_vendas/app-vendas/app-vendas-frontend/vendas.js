@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         try {
-            const response = await fetch('http://localhost:8081/api/vendas', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/vendas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(dadosVenda)
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- LÓGICA DA TABELA DE VENDAS (COM PAGINAÇÃO) ---
     async function fetchVendas(page = 0) {
         try {
-            const response = await fetch(`http://localhost:8081/api/vendas?pagina=${page}`, {
+            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/vendas?pagina=${page}`, {
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteVenda(id) {
         try {
-            const response = await fetch(`http://localhost:8081/api/vendas/${id}`, {
+            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/vendas/${id}`, {
                 method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) { 
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function faturarVenda(id) {
         try {
-            const response = await fetch(`http://localhost:8081/api/vendas/${id}/faturar`, {
+            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/vendas/${id}/faturar`, {
                 method: 'POST', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) { 
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchTopClientes() {
         try {
-            const response = await fetch(`http://localhost:8081/api/relatorios/top-clientes`, {
+            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/relatorios/top-clientes`, {
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
