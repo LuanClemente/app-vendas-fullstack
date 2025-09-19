@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchMetas() {
         try {
-            const response = await fetch('http://localhost:8081/api/metas', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/metas', {
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         const dadosMeta = { valor: valorInput.value, mes: mesSelect.value, ano: anoInput.value, idUsuario: userId };
         try {
-            const response = await fetch('http://localhost:8081/api/metas', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/metas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(dadosMeta)
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         try {
-            const response = await fetch('http://localhost:8081/api/metas-cliente', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/metas-cliente', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(dadosMeta)
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ano = anoInput.value;
         if (!mes || !ano) return;
         try {
-            const response = await fetch(`http://localhost:8081/api/relatorios/progresso-metas-cliente?mes=${mes}&ano=${ano}`, {
+            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/relatorios/progresso-metas-cliente?mes=${mes}&ano=${ano}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteMetaCliente(id) {
         try {
-            const response = await fetch(`http://localhost:8081/api/metas-cliente/${id}`, {
+            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/metas-cliente/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function updateMetaCliente(id, valor) {
         try {
-            const response = await fetch(`http://localhost:8081/api/metas-cliente/${id}`, {
+            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/metas-cliente/${id}`, {
                 method: 'PUT',
                 headers: { 
                     'Content-Type': 'application/json',
