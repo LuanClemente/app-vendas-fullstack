@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 5. Fazendo a requisição para a API com a função fetch
-            const response = await fetch('http://localhost:8081/api/login', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/login', {
                 method: 'POST',
                 headers: {
                     // Informando ao back-end que estamos enviando dados em formato JSON
