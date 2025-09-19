@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // =======================================================
     async function fetchSupervisorDashboard() {
         try {
-            const response = await fetch('http://localhost:8081/api/relatorios/dashboard-supervisor', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/relatorios/dashboard-supervisor', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const isEditing = editingUserId !== null;
         const method = isEditing ? 'PUT' : 'POST';
-        const url = isEditing ? `http://localhost:8081/api/usuarios/${editingUserId}` : 'http://localhost:8081/api/usuarios';
+        const url = isEditing ? `https://app-vendas-fullstack-production.up.railway.app//api/usuarios/${editingUserId}` : 'https://app-vendas-fullstack-production.up.railway.app//api/usuarios';
 
         try {
             const response = await fetch(url, {
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchUsers() {
         try {
-            const response = await fetch('http://localhost:8081/api/usuarios', { headers: { 'Authorization': `Bearer ${token}` } });
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/usuarios', { headers: { 'Authorization': `Bearer ${token}` } });
             if (response.ok) {
                 const users = await response.json();
                 renderUsersTable(users);
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', async (event) => {
                 const userId = event.target.dataset.id;
                 try {
-                    const response = await fetch(`http://localhost:8081/api/usuarios/${userId}`, { headers: { 'Authorization': `Bearer ${token}` } });
+                    const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/usuarios/${userId}`, { headers: { 'Authorization': `Bearer ${token}` } });
                     if (response.ok) {
                         const user = await response.json();
                         openModalForEdit(user);
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteUser(id) {
         try {
-            const response = await fetch(`http://localhost:8081/api/usuarios/${id}`, {
+            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/usuarios/${id}`, {
                 method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             valor: valorMetaGeralInput.value
         };
         try {
-            const response = await fetch('http://localhost:8081/api/metas-gerais', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/metas-gerais', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(dadosMeta)
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchDesempenhoEquipe() {
         try {
-            const response = await fetch('http://localhost:8081/api/relatorios/desempenho-equipe', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/relatorios/desempenho-equipe', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchSupervisorDashboard() {
         try {
-            const response = await fetch('http://localhost:8081/api/relatorios/dashboard-supervisor', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/relatorios/dashboard-supervisor', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
