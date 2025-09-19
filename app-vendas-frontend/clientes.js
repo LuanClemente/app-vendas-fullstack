@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     
+    let apiUrl = window.process.env.API_URL;
+    if (!apiUrl.endsWith('/')) apiUrl += '/';
     const token = localStorage.getItem('jwt_token');
 
     if (!token) {
@@ -72,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const isEditing = editingClientId !== null;
         const method = isEditing ? 'PUT' : 'POST';
         const url = isEditing 
-            ? `window.process.env.API_URL/${editingClientId}` 
-            : 'window.process.env.API_URL';
+            ? `${apiUrl}api/clientes/${editingClientId}` 
+            : `${apiUrl}api/clientes`;
 
         try {
             const response = await fetch(url, {
@@ -97,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchClientes() {
         try {
-            const response = await fetch('window.process.env.API_URL', {
+            const response = await fetch(`${apiUrl}api/clientes`, {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -150,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteCliente(id) {
         try {
-            const response = await fetch(`window.process.env.API_URL/${id}`, {
+            const response = await fetch(`${apiUrl}api/clientes/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -161,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     async function fetchClientByIdAndOpenModal(id) {
         try {
-            const response = await fetch(`window.process.env.API_URL/${id}`, {
+            const response = await fetch(`${apiUrl}api/clientes/${id}`, {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
