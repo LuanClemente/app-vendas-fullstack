@@ -30,48 +30,28 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            // 5. Fazendo a requisição para a API com a função fetch
-            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/login', {
+            // Monta a URL corretamente, evitando barras duplicadas
+            let apiUrl = window.process.env.API_URL;
+            if (!apiUrl.endsWith('/')) apiUrl += '/';
+            const response = await fetch(apiUrl + 'api/login', {
                 method: 'POST',
                 headers: {
-                    // Informando ao back-end que estamos enviando dados em formato JSON
                     'Content-Type': 'application/json'
                 },
-                // Convertendo nosso objeto JavaScript para uma string JSON
                 body: JSON.stringify(dadosLogin)
             });
-             if (response.ok) {
-            const data = await response.json();
 
-            // Guardamos o token e também os dados do usuário
-            localStorage.setItem('jwt_token', data.token);
-            localStorage.setItem('user_id', data.id);
-            localStorage.setItem('user_name', data.nome);
-            localStorage.setItem('user_perfil', data.perfil);
-
-            window.location.href = 'dashboard.html';
-        } 
-
-            // 6. Analisando a resposta do back-end
             if (response.ok) {
-                // Se a resposta for SUCESSO (status 200-299)...
-                const data = await response.json(); // Pega o corpo da resposta (que contém o token)
-
-                // Guardamos o token no localStorage do navegador.
-                // É um "cofre" que persiste os dados mesmo se fecharmos a aba.
+                const data = await response.json();
                 localStorage.setItem('jwt_token', data.token);
-                // Redireciona o usuário para a página principal da aplicação.
-                // Vamos criar este arquivo em breve!
+                localStorage.setItem('user_id', data.id);
+                localStorage.setItem('user_name', data.nome);
+                localStorage.setItem('user_perfil', data.perfil);
                 window.location.href = 'dashboard.html';
-
             } else {
-                // Se a resposta for ERRO...
-                // O back-end pode nos dar uma mensagem de erro específica, mas por enquanto vamos usar uma genérica.
                 errorMessage.textContent = 'E-mail ou senha inválidos. Tente novamente.';
             }
-
         } catch (error) {
-            // Se houver um erro de rede (ex: back-end offline)
             console.error('Erro ao tentar fazer login:', error);
             errorMessage.textContent = 'Não foi possível conectar ao servidor. Verifique sua conexão.';
         }
