@@ -85,7 +85,7 @@ if (navMenu && userPerfil) {
             };
     
             try {
-                const response = await fetch('http://localhost:8081/api/metas', {
+                const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/metas', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify(dadosMeta)
@@ -105,7 +105,7 @@ if (navMenu && userPerfil) {
 
     async function fetchDashboardData() {
         try {
-            const response = await fetch('http://localhost:8081/api/relatorios/dashboard/vendedor', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/relatorios/dashboard/vendedor', {
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -157,7 +157,7 @@ if (navMenu && userPerfil) {
 
     async function fetchAniversariantes() {
         try {
-            const response = await fetch('http://localhost:8081/api/clientes/aniversariantes', {
+            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/clientes/aniversariantes', {
                 method: 'GET', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
