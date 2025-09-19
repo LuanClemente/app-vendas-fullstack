@@ -1,98 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    const token = localStorage.getItem('jwt_token');
-    const userPerfil = localStorage.getItem('user_perfil');
-
-    if (!token || (userPerfil !== 'SUPERVISOR' && userPerfil !== 'ADMIN')) {
-        alert('Você não tem permissão para acessar esta página.');
-        window.location.href = 'dashboard.html';
-        return;
-    }
-
-    // --- ELEMENTOS DO DOM ---
-    const tableBody = document.getElementById('users-table-body');
-    const modal = document.getElementById('user-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const addButton = document.getElementById('add-user-button');
-    const closeModalButton = document.getElementById('close-modal-button');
-    const cancelButton = document.getElementById('cancel-button');
-    const userForm = document.getElementById('user-form');
-    const desempenhoList = document.getElementById('desempenho-equipe-list');
-    const metaGeralForm = document.getElementById('meta-geral-form');
-    const mesMetaGeralSelect = document.getElementById('mes-meta-geral');
-    const anoMetaGeralInput = document.getElementById('ano-meta-geral');
-    const valorMetaGeralInput = document.getElementById('valor-meta-geral');
-    const messageAreaMetaGeral = document.getElementById('message-area-meta-geral');
-    
-    let editingUserId = null;
-
-    // --- LÓGICA DO CRUD DE USUÁRIOS ---
-    const openModalForCreate = () => { /* ... */ };
-    const openModalForEdit = (user) => { /* ... */ };
-    const closeModal = () => { /* ... */ };
-    addButton.addEventListener('click', openModalForCreate);
-    closeModalButton.addEventListener('click', closeModal);
-    cancelButton.addEventListener('click', closeModal);
-    window.addEventListener('click', (event) => { if (event.target == modal) closeModal(); });
-    userForm.addEventListener('submit', async (event) => { /* ... */ });
-    async function fetchUsers() { /* ... */ }
-    function renderUsersTable(users) { /* ... */ }
-    function addEventListenersToButtons() { /* ... */ }
-    async function deleteUser(id) { /* ... */ }
-
-    // --- LÓGICA DO FORMULÁRIO DE META GERAL ---
-    function populateMetaGeralForm() { /* ... */ }
-    metaGeralForm.addEventListener('submit', async (event) => { /* ... */ });
-
-    // --- LÓGICA DO PAINEL DE DESEMPENHO DA EQUIPE ---
-    async function fetchDesempenhoEquipe() { /* ... */ }
-    function renderDesempenhoEquipe(desempenho) { /* ... */ }
-    
-    // =======================================================
-    //  NOVA LÓGICA PARA O DASHBOARD DO SUPERVISOR
-    // =======================================================
-    async function fetchSupervisorDashboard() {
-        try {
-            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/relatorios/dashboard-supervisor', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                renderSupervisorDashboard(data);
-            }
-        } catch (error) {
-            console.error("Erro ao buscar dados do dashboard do supervisor:", error);
-        }
-    }
-
-    function renderSupervisorDashboard(data) {
-        const formatadorMoeda = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-        document.getElementById('geral-meta').textContent = formatadorMoeda.format(data.metaGeral);
-        document.getElementById('geral-vendido').textContent = formatadorMoeda.format(data.totalVendidoGeral);
-        document.getElementById('geral-faturado').textContent = formatadorMoeda.format(data.totalFaturadoGeral);
-        document.getElementById('geral-cortes').textContent = formatadorMoeda.format(data.totalCortesGeral);
-        document.getElementById('geral-falta-faturar').textContent = formatadorMoeda.format(data.faltaParaFaturarGeral);
-
-        const percVendas = data.porcentagemGeralAtingida;
-        document.getElementById('geral-perc-vendas').textContent = percVendas.toFixed(2);
-        const progressBarVendas = document.getElementById('geral-progresso-vendas');
-        progressBarVendas.style.width = `${Math.min(percVendas, 100)}%`;
-
-        const percFaturado = data.porcentagemGeralFaturada;
-        document.getElementById('geral-perc-faturado').textContent = percFaturado.toFixed(2);
-        const progressBarFaturado = document.getElementById('geral-progresso-faturado');
-        progressBarFaturado.style.width = `${Math.min(percFaturado, 100)}%`;
-    }
-
-    // --- INICIALIZAÇÃO ---
-    populateMetaGeralForm();
-    fetchUsers();
-    fetchDesempenhoEquipe();
-    fetchSupervisorDashboard(); // Chamada da nova função
-});
-
-// Para garantir, segue o código completo das funções que não foram alteradas
-document.addEventListener('DOMContentLoaded', () => {
+    // Usar variável do ambiente para URL da API
+    let apiUrl = window.process.env.API_URL;
+    if (!apiUrl.endsWith('/')) apiUrl += '/';
 
     const token = localStorage.getItem('jwt_token');
     const userPerfil = localStorage.getItem('user_perfil');
@@ -159,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const isEditing = editingUserId !== null;
         const method = isEditing ? 'PUT' : 'POST';
-        const url = isEditing ? `https://app-vendas-fullstack-production.up.railway.app//api/usuarios/${editingUserId}` : 'https://app-vendas-fullstack-production.up.railway.app//api/usuarios';
+        const url = isEditing ? `${apiUrl}api/usuarios/${editingUserId}` : `${apiUrl}api/usuarios`;
 
         try {
             const response = await fetch(url, {
@@ -181,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchUsers() {
         try {
-            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/usuarios', { headers: { 'Authorization': `Bearer ${token}` } });
+            const response = await fetch(`${apiUrl}api/usuarios`, { headers: { 'Authorization': `Bearer ${token}` } });
             if (response.ok) {
                 const users = await response.json();
                 renderUsersTable(users);
@@ -216,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', async (event) => {
                 const userId = event.target.dataset.id;
                 try {
-                    const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/usuarios/${userId}`, { headers: { 'Authorization': `Bearer ${token}` } });
+                    const response = await fetch(`${apiUrl}api/usuarios/${userId}`, { headers: { 'Authorization': `Bearer ${token}` } });
                     if (response.ok) {
                         const user = await response.json();
                         openModalForEdit(user);
@@ -228,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function deleteUser(id) {
         try {
-            const response = await fetch(`https://app-vendas-fullstack-production.up.railway.app//api/usuarios/${id}`, {
+            const response = await fetch(`${apiUrl}api/usuarios/${id}`, {
                 method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -261,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
             valor: valorMetaGeralInput.value
         };
         try {
-            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/metas-gerais', {
+            const response = await fetch(`${apiUrl}api/metas-gerais`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify(dadosMeta)
@@ -280,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchDesempenhoEquipe() {
         try {
-            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/relatorios/desempenho-equipe', {
+            const response = await fetch(`${apiUrl}api/relatorios/desempenho-equipe`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -314,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchSupervisorDashboard() {
         try {
-            const response = await fetch('https://app-vendas-fullstack-production.up.railway.app//api/relatorios/dashboard-supervisor', {
+            const response = await fetch(`${apiUrl}api/relatorios/dashboard-supervisor`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
@@ -344,6 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBarFaturado.style.width = `${Math.min(percFaturado, 100)}%`;
     }
 
+    // --- INICIALIZAÇÃO ---
     populateMetaGeralForm();
     fetchUsers();
     fetchDesempenhoEquipe();
