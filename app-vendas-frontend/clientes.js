@@ -164,6 +164,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addEventListenersToButtons() {
+        // Remove listeners antigos antes de adicionar novos
+        document.querySelectorAll('.action-btn.delete').forEach(button => {
+            button.replaceWith(button.cloneNode(true));
+        });
+        document.querySelectorAll('.action-btn.edit').forEach(button => {
+            button.replaceWith(button.cloneNode(true));
+        });
+
+        // Adiciona listeners apenas uma vez
         document.querySelectorAll('.action-btn.delete').forEach(button => {
             button.addEventListener('click', (event) => {
                 const clienteId = event.target.dataset.id;
@@ -172,10 +181,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
-
         document.querySelectorAll('.action-btn.edit').forEach(button => {
             button.addEventListener('click', (event) => {
                 const clienteId = event.target.dataset.id;
+                // Evita abrir modal se o cliente não existe
+                if (!clienteId) return;
                 fetchClientByIdAndOpenModal(clienteId);
             });
         });
