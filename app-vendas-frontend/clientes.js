@@ -14,8 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusSelect = document.getElementById('status-filter'); // select de status
     const modal = document.getElementById('client-modal');
     const modalTitle = document.getElementById('modal-title');
-    // Corrige para usar id do título do modal
-    const modalTitle = document.getElementById('modal-title');
     const addButton = document.getElementById('add-client-button');
     const closeModalButton = document.getElementById('close-modal-button');
     const cancelButton = document.getElementById('cancel-button');
