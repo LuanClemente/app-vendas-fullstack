@@ -165,10 +165,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addEventListenersToButtons() {
         // Remove listeners antigos antes de adicionar novos
-        document.querySelectorAll('.action-btn.delete').forEach(button => {
+        // Só recria botões de editar/excluir dentro da tabela
+        document.querySelectorAll('#clients-table-body .action-btn.delete').forEach(button => {
             button.replaceWith(button.cloneNode(true));
         });
-        document.querySelectorAll('.action-btn.edit').forEach(button => {
+        document.querySelectorAll('#clients-table-body .action-btn.edit').forEach(button => {
             button.replaceWith(button.cloneNode(true));
         });
 
