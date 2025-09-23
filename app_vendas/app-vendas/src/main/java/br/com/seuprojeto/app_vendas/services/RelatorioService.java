@@ -93,6 +93,8 @@ public class RelatorioService {
         BigDecimal totalVendido = vendasDoMes.stream().map(Venda::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal totalCortes = vendasDoMes.stream().filter(venda -> venda.getValor().compareTo(BigDecimal.ZERO) < 0).map(Venda::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal totalFaturado = vendasDoMes.stream().filter(Venda::isFaturada).map(Venda::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
+        // Novo cálculo: abate cortes apenas do total faturado
+        BigDecimal totalFaturadoComCortes = totalFaturado.add(totalCortes);
         BigDecimal valorMeta = metaDoMes.getValor();
         BigDecimal valorFaltante = valorMeta.subtract(totalVendido).max(BigDecimal.ZERO);
         double porcentagemAtingida = 0.0;
@@ -101,9 +103,9 @@ public class RelatorioService {
         }
         double porcentagemFaturada = 0.0;
         if (valorMeta.compareTo(BigDecimal.ZERO) > 0) {
-            porcentagemFaturada = totalFaturado.divide(valorMeta, 4, RoundingMode.HALF_UP).multiply(new BigDecimal("100")).doubleValue();
+            porcentagemFaturada = totalFaturadoComCortes.divide(valorMeta, 4, RoundingMode.HALF_UP).multiply(new BigDecimal("100")).doubleValue();
         }
-        return new DashboardVendedorDTO(valorMeta, totalVendido, valorFaltante, porcentagemAtingida, totalCortes.abs(), totalFaturado, porcentagemFaturada);
+        return new DashboardVendedorDTO(valorMeta, totalVendido, valorFaltante, porcentagemAtingida, totalCortes.abs(), totalFaturadoComCortes, porcentagemFaturada);
     }
 
     public List<ProgressoMetaClienteDTO> getProgressoMetasClientes(Usuario usuario, int mes, int ano) {

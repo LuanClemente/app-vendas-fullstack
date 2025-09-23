@@ -10,10 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const tableBody = document.getElementById('clients-table-body');
-    const filtroInput = document.querySelector('input[type="text"]'); // campo de filtro
-    const statusSelect = document.querySelector('select'); // select de status
+    const filtroInput = document.getElementById('search-input'); // campo de filtro
+    const statusSelect = document.getElementById('status-filter'); // select de status
     const modal = document.getElementById('client-modal');
-    const modalTitle = document.querySelector('.modal-header h2');
+    const modalTitle = document.getElementById('modal-title');
+    // Corrige para usar id do título do modal
+    const modalTitle = document.getElementById('modal-title');
     const addButton = document.getElementById('add-client-button');
     const closeModalButton = document.getElementById('close-modal-button');
     const cancelButton = document.getElementById('cancel-button');
