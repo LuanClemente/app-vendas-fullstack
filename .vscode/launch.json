@@ -1,14 +1,14 @@
 {
-    "configurations": [
+    "configurations": [ // Use IntelliSense to learn about possible attributes.
         {
-            "type": "java",
-            "name": "Spring Boot-AppVendasApplication<app-vendas>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "mainClass": "br.com.seuprojeto.app_vendas.AppVendasApplication",
-            "projectName": "app-vendas",
-            "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "type": "java", // Refer to the documentation for the specific attributes.
+            "name": "Spring Boot-AppVendasApplication<app-vendas>", // Name of the launch configuration
+            "request": "launch", // Launch configuration request type
+            "cwd": "${workspaceFolder}", // Current working directory
+            "mainClass": "br.com.seuprojeto.app_vendas.AppVendasApplication", // Main class to launch
+            "projectName": "app-vendas", // Project name
+            "args": "", // Command line arguments
+            "envFile": "${workspaceFolder}/.env" // Environment variables file
         }
     ]
 }

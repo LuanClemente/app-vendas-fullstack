@@ -1,5 +1,5 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic",
-    "java.debug.settings.onBuildFailureProceed": true,
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.compile.nullAnalysis.mode": "automatic", // Enable null analysis
+    "java.debug.settings.onBuildFailureProceed": true, // Proceed with debugging even if there are build errors
+    "java.configuration.updateBuildConfiguration": "interactive" // Prompt to update build configuration when necessary
 }
