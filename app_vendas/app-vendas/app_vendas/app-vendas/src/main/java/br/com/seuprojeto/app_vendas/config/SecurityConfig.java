@@ -85,3 +85,17 @@ public class SecurityConfig { // Classe de configuração de segurança
     }
 }
 
+/*
+ * =================================================================================================
+ * EXPLICAÇÃO GERAL DO ARQUIVO SecurityConfig.java
+ * =================================================================================================
+ * 
+ * Este arquivo é o centro nevrálgico da segurança da nossa API. Usando o Spring Security, ele
+ * estabelece todas as regras de quem pode acessar o quê.
+ * 
+ * Principais Responsabilidades:
+ * 1.  **Configuração da Cadeia de Filtros (securityFilterChain):** Define quais endpoints (URLs) são públicos (como /api/login) e quais exigem autenticação ou perfis específicos (como "ADMIN" ou "SUPERVISOR"). Também desabilita o CSRF (útil para APIs stateless) e configura a aplicação para não criar sessões de usuário no servidor, dependendo inteiramente do token JWT.
+ * 2.  **Configuração do CORS (corsConfigurationSource):** Define as regras de Cross-Origin Resource Sharing. Essencialmente, permite que o nosso frontend (rodando em um domínio/porta diferente) possa fazer requisições para esta API sem ser bloqueado pelo navegador.
+ * 3.  **Gerenciador de Autenticação (authenticationManager):** Disponibiliza o "cérebro" da autenticação do Spring para que possamos usá-lo no nosso `AutenticacaoController` para validar as credenciais do usuário.
+ * 4.  **Codificador de Senhas (passwordEncoder):** Define qual algoritmo será usado para criptografar as senhas dos usuários antes de salvá-las no banco de dados (neste caso, o BCrypt). Isso garante que as senhas nunca sejam armazenadas em texto plano.
+ */
