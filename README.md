@@ -58,3 +58,6 @@ cd app-vendas-fullstack/backend
 
 # Configure as variáveis de ambiente (banco de dados)
 # Execute a aplicação Spring Boot
+# Acesse a pasta do frontend
+cd app-vendas-fullstack/frontend
+# Abra o index.html no navegador
